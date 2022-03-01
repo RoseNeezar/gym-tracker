@@ -1,0 +1,22 @@
+version: "3.5"
+services:
+  postgres:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres_password
+  api:
+    depends_on:
+      - postgres
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    env_file:
+      - .env
+    volumes:
+      - .:/opt/app/api
+volumes:
+  app:
